@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoMatze · Krypto auf Deutsch, Daten statt Hype</title>
+<meta name="description" content="Bitcoin- und Krypto-Analyse auf Deutsch. Jedes Trade-Setup öffentlich, jede Auflösung nachprüfbar. Track Record, Methode und die Tools, die ich selbst nutze.">
+<meta property="og:title" content="CryptoMatze · Daten statt Hype">
+<meta property="og:description" content="Jedes Setup öffentlich, jede Auflösung nachprüfbar. 44,9 % Trefferquote seit 18. Okt..">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cryptomatze.github.io/">
+<meta property="og:image" content="https://cryptomatze.github.io/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@realCryptoMatze">
+<meta name="theme-color" content="#0a0b0e">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<style>
+  @font-face { font-family: Syne; font-weight: 400 800; font-display: swap; src: url(fonts/Syne.woff2) format("woff2"); }
+  @font-face { font-family: "DM Mono"; font-weight: 400; font-display: swap; src: url(fonts/DMMono-400.woff2) format("woff2"); }
+  @font-face { font-family: "DM Mono"; font-weight: 500; font-display: swap; src: url(fonts/DMMono-500.woff2) format("woff2"); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0b0e; --p1: #0f1014; --p2: #14151a; --p3: #1b1c22;
+    --gold: #c9960c; --gold2: #e8b020; --gold3: #ffd060; --gd: linear-gradient(135deg, #ffd060, #c9960c);
+    --t: #f8f4eb; --t2: rgba(248,244,235,.66); --t3: rgba(248,244,235,.38);
+    --up: #0dcc6a; --dn: #ff4466;
+    --line: rgba(201,150,12,.14); --line2: rgba(201,150,12,.28);
+    --mono: "DM Mono", ui-monospace, Menlo, monospace;
+    --r: 12px; --max: 1160px;
+  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html, body { background: var(--bg); color: var(--t); font-family: Syne, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  .num { font-variant-numeric: tabular-nums; }
+  .ok { color: var(--up); } .bad { color: var(--dn); } .mute { color: var(--t2); } .gold { color: var(--gold3); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── Navigation ── */
+  .topline { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 40;
+    background: linear-gradient(90deg, transparent, var(--gold2) 30%, var(--gold3) 50%, var(--gold2) 70%, transparent); }
+  nav.top { position: sticky; top: 0; z-index: 30; background: rgba(10,11,14,.86); border-bottom: 1px solid var(--line);
+    backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); }
+  nav.top .in { max-width: var(--max); margin: 0 auto; padding: 13px 24px; display: flex; align-items: center; gap: 18px; }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand img { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(201,150,12,.5); }
+  .brand b { font-weight: 800; font-size: 16px; letter-spacing: .01em; }
+  .menu { margin-left: auto; display: flex; gap: 26px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; }
+  .menu a { color: var(--t2); transition: color .15s; }
+  .menu a:hover { color: var(--gold3); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 20px; border-radius: 9px; font-family: var(--mono);
+    font-weight: 500; font-size: 13px; letter-spacing: .02em; white-space: nowrap; transition: filter .15s, border-color .15s, background .15s; cursor: pointer; }
+  .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .btn.gold { background: var(--gd); color: #120d00; }
+  .btn.gold:hover { filter: brightness(1.07); }
+  .btn.ghost { border: 1px solid var(--line2); color: var(--t); background: rgba(20,21,26,.6); }
+  .btn.ghost:hover { border-color: var(--gold); }
+  .btn.sm { padding: 9px 14px; font-size: 12px; }
+
+  /* ── Hero ── */
+  .bg { position: absolute; inset: 0 0 auto 0; height: 900px; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 900px 520px at 70% -140px, rgba(201,150,12,.17), transparent 68%),
+      linear-gradient(rgba(255,208,96,.045) 1px, transparent 1px) 0 0 / 64px 64px,
+      linear-gradient(90deg, rgba(255,208,96,.045) 1px, transparent 1px) 0 0 / 64px 64px;
+    -webkit-mask-image: linear-gradient(#000 35%, transparent); mask-image: linear-gradient(#000 35%, transparent); }
+  .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 48px; align-items: center; padding: 88px 0 72px; }
+  .eb { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold3); display: flex; align-items: center; gap: 12px; }
+  .eb::before { content: ""; width: 26px; height: 1.5px; background: var(--gold3); flex-shrink: 0; }
+  h1 { font-size: clamp(36px, 4.2vw, 54px); font-weight: 800; line-height: .98; letter-spacing: -.025em; margin: 22px 0 22px; }
+  .g { background: var(--gd); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: 18px; line-height: 1.6; color: var(--t2); max-width: 560px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+
+  .live { border: 1px solid var(--line2); border-radius: 16px; background: linear-gradient(180deg, rgba(22,23,28,.96), rgba(14,15,19,.96)); position: relative; overflow: hidden; }
+  .live::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold2), transparent); }
+  .live-h { display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 0 rgba(13,204,106,.5); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,204,106,.45); } 70% { box-shadow: 0 0 0 9px rgba(13,204,106,0); } 100% { box-shadow: 0 0 0 0 rgba(13,204,106,0); } }
+  .live-h span:last-child { margin-left: auto; letter-spacing: .04em; text-transform: none; }
+  .live-b { padding: 22px 20px 6px; }
+  .live .k { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); }
+  .live .big { font-weight: 800; font-size: clamp(30px, 3vw, 40px); line-height: 1; letter-spacing: -.02em; margin: 10px 0 8px; white-space: nowrap; }
+  .live .delta { font-family: var(--mono); font-size: 14px; }
+  .chart { display: block; width: 100%; height: 120px; margin: 18px 0 4px; overflow: visible; }
+  .live-f { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+  .live-f div { padding: 14px 16px; border-right: 1px solid var(--line); }
+  .live-f div:last-child { border-right: 0; }
+  .live-f b { display: block; font-weight: 800; font-size: 18px; margin-top: 6px; white-space: nowrap; }
+  .live-f small { font-family: var(--mono); font-size: 11px; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ── Zahlenband ── */
+  .proof { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .proof div { padding: 26px 24px; border-right: 1px solid var(--line); }
+  .proof div:last-child { border-right: 0; }
+  .proof b { display: block; font-weight: 800; font-size: 34px; letter-spacing: -.01em; }
+  .proof span { display: block; font-family: var(--mono); font-size: 12px; color: var(--t2); margin-top: 8px; line-height: 1.5; }
+
+  /* ── Sektionen ── */
+  section { padding: 104px 0 0; scroll-margin-top: 40px; }
+  .sh { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin-bottom: 34px; }
+  .sh .no { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--gold3); text-transform: uppercase; }
+  .sh h2 { font-size: clamp(30px, 3.6vw, 46px); font-weight: 800; letter-spacing: -.02em; line-height: 1.04; margin-top: 14px; }
+  .sh p { color: var(--t2); font-size: 16px; line-height: 1.6; max-width: 620px; margin-top: 14px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--r); background: var(--p1); }
+
+  /* Track Record */
+  .tr { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 16px; }
+  .tr .panel { padding: 22px; }
+  .tr-k { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
+  .tr-k small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); }
+  .tr-k b { display: block; font-weight: 800; font-size: clamp(17px, 1.75vw, 23px); margin-top: 6px; white-space: nowrap; }
+  .tr .chart { height: 240px; }
+  .axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--t3); margin-top: 8px; }
+  .list-h { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold2); margin-bottom: 8px; }
+  .res { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 13px; }
+  .res:last-of-type { border-bottom: 0; }
+  .res .s { font-family: Syne; font-weight: 700; font-size: 15px; }
+  .res .s small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--t3); margin-top: 2px; }
+  .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid currentColor; }
+  .more { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--mono); font-size: 13px; color: var(--gold3); }
+  .more:hover { text-decoration: underline; }
+
+  /* Laufende Trades */
+  .trades { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .trade { border: 1px solid var(--line); border-radius: var(--r); background: var(--p1); padding: 18px; transition: border-color .15s, transform .15s; display: block; }
+  .trade:hover { border-color: var(--line2); transform: translateY(-2px); }
+  .trade-h { display: flex; align-items: center; gap: 10px; }
+  .trade-h b { font-weight: 800; font-size: 20px; }
+  .dir { font-family: var(--mono); font-weight: 500; font-size: 10.5px; letter-spacing: .1em; padding: 3px 8px; border-radius: 4px; }
+  .dir.long { color: var(--up); background: rgba(13,204,106,.1); } .dir.short { color: var(--dn); background: rgba(255,68,102,.1); }
+  .trade-h .when { margin-left: auto; font-family: var(--mono); font-size: 11.5px; color: var(--t3); }
+  .lv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+  .lv div { background: var(--p2); border-radius: 8px; padding: 9px 10px; }
+  .lv small { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--t3); }
+  .lv span { display: block; font-family: var(--mono); font-size: 13.5px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .trade-f { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--t2); }
+  .trade-f .go { color: var(--gold3); }
+
+  /* Methode */
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r); background: var(--p1); overflow: hidden; }
+  .step { padding: 26px 22px; border-right: 1px solid var(--line); }
+  .step:last-child { border-right: 0; }
+  .step .n { font-family: var(--mono); font-size: 12px; color: var(--gold3); letter-spacing: .1em; }
+  .step b { display: block; font-size: 19px; font-weight: 800; line-height: 1.2; margin: 14px 0 10px; }
+  .step p { color: var(--t2); font-size: 14.5px; line-height: 1.6; }
+  .never { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: center; }
+  .never .l { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); margin-right: 6px; }
+  .never span.c { font-family: var(--mono); font-size: 12.5px; color: var(--t2); padding: 8px 13px; border: 1px solid var(--line); border-radius: 20px; }
+  .never span.c::before { content: "✕"; color: var(--dn); margin-right: 8px; font-size: 11px; }
+
+  /* Tools */
+  #degenlens { scroll-margin-top: 90px; }
+  .tools { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; }
+  .tools .side { display: grid; gap: 16px; }
+  .tool { border: 1px solid var(--line); border-radius: var(--r); background: var(--p1); padding: 26px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .tool.feat { background: radial-gradient(ellipse 520px 300px at 85% 0%, rgba(201,150,12,.14), transparent 70%), var(--p1); border-color: var(--line2); }
+  .tool .k { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold3); display: flex; gap: 10px; align-items: center; }
+  .tool .k em { font-style: normal; color: var(--t3); }
+  .tool h3 { font-size: 26px; font-weight: 800; letter-spacing: -.01em; margin: 14px 0 10px; }
+  .tool.feat h3 { font-size: 34px; }
+  .tool p { color: var(--t2); font-size: 15px; line-height: 1.6; }
+  .tool ul { list-style: none; margin: 18px 0 4px; display: grid; gap: 9px; }
+  .tool li { font-family: var(--mono); font-size: 13px; color: var(--t2); padding-left: 20px; position: relative; }
+  .tool li::before { content: ""; position: absolute; left: 2px; top: 6px; border-left: 7px solid var(--gold3); border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+  .tool .act { margin-top: auto; padding-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .tool .ad { font-family: var(--mono); font-size: 11px; color: var(--t3); }
+
+  /* X */
+  .xbox { border: 1px solid var(--line2); border-radius: 16px; overflow: hidden;
+    background: radial-gradient(ellipse 700px 380px at 0% 0%, rgba(201,150,12,.13), transparent 70%), var(--p1);
+    display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .xbox .l { padding: 40px; border-right: 1px solid var(--line); }
+  .xbox .l h2 { font-size: clamp(30px, 3.4vw, 44px); font-weight: 800; letter-spacing: -.02em; line-height: 1.05; margin: 14px 0 14px; }
+  .xbox .l p { color: var(--t2); font-size: 16px; line-height: 1.6; }
+  .xbox .l .cta { margin-top: 26px; }
+  .formats { display: grid; grid-template-columns: 1fr 1fr; }
+  .fmt { padding: 24px 26px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .fmt:nth-child(2n) { border-right: 0; }
+  .fmt:nth-last-child(-n+2) { border-bottom: 0; }
+  .fmt small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold3); }
+  .fmt b { display: block; font-size: 17px; font-weight: 800; margin: 10px 0 6px; }
+  .fmt p { color: var(--t2); font-size: 14px; line-height: 1.55; }
+
+  /* Footer */
+  footer { margin-top: 110px; border-top: 1px solid var(--line); }
+  footer .in { max-width: var(--max); margin: 0 auto; padding: 34px 24px 48px; display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, .7fr)); gap: 32px; }
+  footer h4 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold2); margin-bottom: 12px; }
+  footer p, footer a { font-family: var(--mono); font-size: 12.5px; color: var(--t3); line-height: 1.75; }
+  footer a { display: block; }
+  footer a:hover { color: var(--gold3); }
+  footer .brand { margin-bottom: 14px; }
+
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; padding: 56px 0 48px; }
+    .tr, .tools, .xbox { grid-template-columns: minmax(0, 1fr); }
+    .xbox .l { border-right: 0; border-bottom: 1px solid var(--line); }
+    .trades { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .step:nth-child(2) { border-right: 0; }
+    .step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof div:nth-child(2) { border-right: 0; }
+    .proof div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 720px) {
+    .wrap, nav.top .in, footer .in { padding-left: 16px; padding-right: 16px; }
+    .menu { display: none; }
+    nav.top .btn { margin-left: auto; }
+    h1 { font-size: min(40px, 8.6vw); }
+    .eb { font-size: 11px; letter-spacing: .14em; }
+    .live-h span:last-child { display: none; }
+    .tr-k { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .tr-k b { font-size: 19px; }
+    .sh h2 { font-size: min(30px, 7.4vw); }
+    .lead { font-size: 16.5px; }
+    .cta .btn { flex: 1 1 auto; }
+    section { padding-top: 76px; }
+    .sh { grid-template-columns: minmax(0, 1fr); margin-bottom: 24px; }
+    .proof div { padding: 20px 16px; }
+    .proof b { font-size: 26px; }
+    .trades, .steps, .formats { grid-template-columns: minmax(0, 1fr); }
+    .step { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; }
+    .fmt { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; }
+    .fmt:last-child { border-bottom: 0 !important; }
+    .tr-k b { font-size: 21px; }
+    .tool, .xbox .l { padding: 22px; }
+    .tool.feat h3 { font-size: 28px; }
+    .live-f div { padding: 12px 14px; }
+    .live-f b { font-size: 17px; }
+    footer .in { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<nav class="top"><div class="in">
+  <a class="brand" href="#top"><img src="img/logo.png" alt="CryptoMatze"><b>CryptoMatze</b></a>
+  <div class="menu"><a href="#track-record">Track Record</a><a href="#trades">Trades</a><a href="#methode">Methode</a><a href="#degenlens">DegenLens</a></div>
+  <a class="btn gold sm" href="https://x.com/realCryptoMatze" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Folgen</a>
+</div></nav>
+
+<div class="bg"></div>
+<main class="wrap" id="top">
+  <header class="hero">
+    <div>
+      <div class="eb">Krypto auf Deutsch · Daten statt Hype</div>
+      <h1>Jeder Trade<br>öffentlich.<br><span class="g">Jedes Ergebnis<br>nachprüfbar.</span></h1>
+      <p class="lead">Ich bin Matze. Ich analysiere Bitcoin und den Kryptomarkt mit Daten, nicht mit Gefühl. Jedes Setup poste ich vorher auf X, das Ergebnis wird automatisch gegen die echten Kerzen nachgerechnet. Auch wenn es danebengeht.</p>
+      <div class="cta">
+        <a class="btn gold" href="track-record.html">Track Record ansehen →</a>
+        <a class="btn ghost" href="https://x.com/realCryptoMatze" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@realCryptoMatze</a>
+      </div>
+    </div>
+    <aside class="live" aria-label="Depot-Simulation">
+      <div class="live-h"><span class="pulse"></span><span>Depot-Simulation</span><span>Stand 30. Okt. · 21:16</span></div>
+      <div class="live-b">
+        <div class="k">1.000 $ Start · 100 $ pro Setup · 10x Hebel</div>
+        <div class="big num">1.299,90 $</div>
+        <div class="delta num"><span class="ok">+299,90 $ · +29,99 %</span> <span class="mute">seit 18. Okt.</span></div>
+        <svg class="chart" viewBox="0 0 600 120" preserveAspectRatio="none" role="img" aria-label="Depotverlauf"><defs><linearGradient id="gl120" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd060" stop-opacity=".2"/><stop offset="1" stop-color="#ffd060" stop-opacity="0"/></linearGradient></defs><polygon points="0,120 0.0,107.5 12.2,110.5 24.5,114.0 36.7,103.5 49.0,107.1 61.2,110.9 73.5,102.3 85.7,97.5 98.0,84.5 110.2,74.7 122.4,69.6 134.7,58.8 146.9,52.0 159.2,45.5 171.4,36.5 183.7,27.2 195.9,30.8 208.2,24.4 220.4,29.0 232.7,33.4 244.9,38.0 257.1,41.3 269.4,45.1 281.6,48.7 293.9,52.0 306.1,55.2 318.4,58.2 330.6,47.3 342.9,50.6 355.1,53.8 367.3,57.7 379.6,45.1 391.8,39.0 404.1,42.2 416.3,34.2 428.6,26.7 440.8,30.4 453.1,17.3 465.3,24.5 477.6,20.1 489.8,28.4 502.0,34.4 514.3,39.7 526.5,30.4 538.8,34.3 551.0,31.9 563.3,23.3 575.5,15.0 587.8,6.0 600.0,9.2 600,120" fill="url(#gl120)"/><line x1="0" x2="600" y1="107.5" y2="107.5" stroke="rgba(248,244,235,.3)" stroke-width="1" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/><polyline points="0.0,107.5 12.2,110.5 24.5,114.0 36.7,103.5 49.0,107.1 61.2,110.9 73.5,102.3 85.7,97.5 98.0,84.5 110.2,74.7 122.4,69.6 134.7,58.8 146.9,52.0 159.2,45.5 171.4,36.5 183.7,27.2 195.9,30.8 208.2,24.4 220.4,29.0 232.7,33.4 244.9,38.0 257.1,41.3 269.4,45.1 281.6,48.7 293.9,52.0 306.1,55.2 318.4,58.2 330.6,47.3 342.9,50.6 355.1,53.8 367.3,57.7 379.6,45.1 391.8,39.0 404.1,42.2 416.3,34.2 428.6,26.7 440.8,30.4 453.1,17.3 465.3,24.5 477.6,20.1 489.8,28.4 502.0,34.4 514.3,39.7 526.5,30.4 538.8,34.3 551.0,31.9 563.3,23.3 575.5,15.0 587.8,6.0 600.0,9.2" fill="none" stroke="#ffd060" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+      </div>
+      <div class="live-f">
+        <div><small>Treffer</small><b class="num">44,9 %</b></div>
+        <div><small>Aufgelöst</small><b class="num">49</b></div>
+        <div><small>Laufen</small><b class="num gold">11</b></div>
+      </div>
+    </aside>
+  </header>
+
+  <div class="proof">
+    <div><b class="num">60</b><span>Setups veröffentlicht<br>seit 18. Okt.</span></div>
+    <div><b class="num">44,9 %</b><span>Trefferquote<br>22 Ziel · 25 Stop</span></div>
+    <div><b class="num">1,96</b><span>Profit-Faktor<br>Gewinne ÷ Verluste</span></div>
+    <div><b class="num">1.910</b><span>Follower auf X<br>@realCryptoMatze</span></div>
+  </div>
+
+  <section id="track-record">
+    <div class="sh">
+      <div><div class="no">01 · Track Record</div><h2>Nachrechenbar, nicht<br>nachträglich schön.</h2>
+      <p>Jedes Setup landet automatisch im Journal und wird gegen die Binance-Kerzen aufgelöst. Die Kurve zeigt ein Depot mit 1.000 $ Start, 100 $ Margin pro Trade und 10x Hebel, nach Gebühren. Auf der Track-Record-Seite kannst du alles selbst einstellen.</p></div>
+      <a class="btn ghost" href="track-record.html">Kompletter Track Record →</a>
+    </div>
+    <div class="tr">
+      <div class="panel">
+        <div class="tr-k">
+          <div><small>Depot</small><b class="num">1.299,90 $</b></div>
+          <div><small>Ergebnis</small><b class="num ok">+29,99 %</b></div>
+          <div><small>Max. Rückgang</small><b class="num bad">−103,20 $</b></div>
+        </div>
+        <svg class="chart" viewBox="0 0 600 240" preserveAspectRatio="none" role="img" aria-label="Depotverlauf"><defs><linearGradient id="gl240" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd060" stop-opacity=".2"/><stop offset="1" stop-color="#ffd060" stop-opacity="0"/></linearGradient></defs><polygon points="0,240 0.0,220.3 12.2,226.5 24.5,234.0 36.7,211.9 49.0,219.3 61.2,227.4 73.5,209.4 85.7,199.1 98.0,171.8 110.2,151.0 122.4,140.2 134.7,117.4 146.9,103.1 159.2,89.5 171.4,70.5 183.7,50.8 195.9,58.4 208.2,44.8 220.4,54.6 232.7,63.8 244.9,73.6 257.1,80.5 269.4,88.5 281.6,96.2 293.9,103.1 306.1,110.0 318.4,116.2 330.6,93.2 342.9,100.1 355.1,106.9 367.3,115.2 379.6,88.5 391.8,75.6 404.1,82.5 416.3,65.6 428.6,49.8 440.8,57.6 453.1,29.9 465.3,45.2 477.6,35.7 489.8,53.4 502.0,66.0 514.3,77.1 526.5,57.6 538.8,65.8 551.0,60.7 563.3,42.5 575.5,25.1 587.8,6.0 600.0,12.8 600,240" fill="url(#gl240)"/><line x1="0" x2="600" y1="220.3" y2="220.3" stroke="rgba(248,244,235,.3)" stroke-width="1" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/><polyline points="0.0,220.3 12.2,226.5 24.5,234.0 36.7,211.9 49.0,219.3 61.2,227.4 73.5,209.4 85.7,199.1 98.0,171.8 110.2,151.0 122.4,140.2 134.7,117.4 146.9,103.1 159.2,89.5 171.4,70.5 183.7,50.8 195.9,58.4 208.2,44.8 220.4,54.6 232.7,63.8 244.9,73.6 257.1,80.5 269.4,88.5 281.6,96.2 293.9,103.1 306.1,110.0 318.4,116.2 330.6,93.2 342.9,100.1 355.1,106.9 367.3,115.2 379.6,88.5 391.8,75.6 404.1,82.5 416.3,65.6 428.6,49.8 440.8,57.6 453.1,29.9 465.3,45.2 477.6,35.7 489.8,53.4 502.0,66.0 514.3,77.1 526.5,57.6 538.8,65.8 551.0,60.7 563.3,42.5 575.5,25.1 587.8,6.0 600.0,12.8" fill="none" stroke="#ffd060" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+        <div class="axis"><span>20. Okt.</span><span>gestrichelt: Startkapital</span><span>30. Okt.</span></div>
+      </div>
+      <div class="panel">
+        <div class="list-h">Zuletzt aufgelöst</div>
+        <a class="res" href="https://x.com/realCryptoMatze/status/2116258009466781831" target="_blank" rel="noopener"><span class="s">HYPE <span class="mute" style="font-family:var(--mono);font-size:11px;font-weight:400">SHORT</span><small>30. Okt. · 20:56</small></span><span class="tag bad">Stop</span><span class="num bad">−9,90 $</span></a>
+<a class="res" href="https://x.com/realCryptoMatze/status/2116211700810514436" target="_blank" rel="noopener"><span class="s">DOGE <span class="mute" style="font-family:var(--mono);font-size:11px;font-weight:400">SHORT</span><small>30. Okt. · 17:52</small></span><span class="tag ok">Ziel</span><span class="num ok">+27,60 $</span></a>
+<a class="res" href="https://x.com/realCryptoMatze/status/2116155340450304130" target="_blank" rel="noopener"><span class="s">SOL <span class="mute" style="font-family:var(--mono);font-size:11px;font-weight:400">LONG</span><small>30. Okt. · 14:08</small></span><span class="tag ok">Ziel</span><span class="num ok">+25,20 $</span></a>
+<a class="res" href="https://x.com/realCryptoMatze/status/2115896850632802521" target="_blank" rel="noopener"><span class="s">XRP <span class="mute" style="font-family:var(--mono);font-size:11px;font-weight:400">LONG</span><small>29. Okt. · 21:01</small></span><span class="tag ok">Ziel</span><span class="num ok">+26,30 $</span></a>
+<a class="res" href="https://x.com/realCryptoMatze/status/2115876491426709668" target="_blank" rel="noopener"><span class="s">GRAM <span class="mute" style="font-family:var(--mono);font-size:11px;font-weight:400">LONG</span><small>29. Okt. · 19:40</small></span><span class="tag mute">abgelaufen</span><span class="num mute">+7,30 $</span></a>
+        <a class="more" href="track-record.html#trades">Alle 60 Setups mit Tweets →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="trades">
+    <div class="sh">
+      <div><div class="no">02 · Laufende Trades</div><h2>Was gerade offen ist.</h2>
+      <p>Entry, Ziel und Stop stehen fest, bevor der Trade läuft. Spätestens nach 72 Stunden kommt die Auflösung als Zitat unter dem Original-Post.</p></div>
+      <a class="btn ghost" href="https://x.com/realCryptoMatze" target="_blank" rel="noopener">Live auf X verfolgen →</a>
+    </div>
+    <div class="trades">
+      <a class="trade" href="https://x.com/realCryptoMatze/status/2116235868381823399" target="_blank" rel="noopener"><div class="trade-h"><b>SOL</b><span class="dir long">LONG</span><span class="when">30. Okt. · 19:28</span></div><div class="lv"><div><small>Entry</small><span class="num">92,34</span></div><div><small>Ziel</small><span class="num ok">+6,8 %</span></div><div><small>Stop</small><span class="num bad">−1,4 %</span></div></div><div class="trade-f"><span>R/R 4,77</span><span class="go">Zum Post ↗</span></div></a>
+<a class="trade" href="https://x.com/realCryptoMatze/status/2116191120094789974" target="_blank" rel="noopener"><div class="trade-h"><b>XRP</b><span class="dir long">LONG</span><span class="when">30. Okt. · 16:30</span></div><div class="lv"><div><small>Entry</small><span class="num">1,2233</span></div><div><small>Ziel</small><span class="num ok">+4,1 %</span></div><div><small>Stop</small><span class="num bad">−1,5 %</span></div></div><div class="trade-f"><span>R/R 2,72</span><span class="go">Zum Post ↗</span></div></a>
+<a class="trade" href="https://x.com/realCryptoMatze/status/2116163978397151601" target="_blank" rel="noopener"><div class="trade-h"><b>BNB</b><span class="dir long">LONG</span><span class="when">30. Okt. · 14:43</span></div><div class="lv"><div><small>Entry</small><span class="num">682,16</span></div><div><small>Ziel</small><span class="num ok">+5,9 %</span></div><div><small>Stop</small><span class="num bad">−1,3 %</span></div></div><div class="trade-f"><span>R/R 4,59</span><span class="go">Zum Post ↗</span></div></a>
+<a class="trade" href="https://x.com/realCryptoMatze/status/2116126473308299686" target="_blank" rel="noopener"><div class="trade-h"><b>HBAR</b><span class="dir long">LONG</span><span class="when">30. Okt. · 12:14</span></div><div class="lv"><div><small>Entry</small><span class="num">0,07048</span></div><div><small>Ziel</small><span class="num ok">+5,7 %</span></div><div><small>Stop</small><span class="num bad">−1,9 %</span></div></div><div class="trade-f"><span>R/R 3,05</span><span class="go">Zum Post ↗</span></div></a>
+<a class="trade" href="https://x.com/realCryptoMatze/status/2116118618043736080" target="_blank" rel="noopener"><div class="trade-h"><b>LINK</b><span class="dir short">SHORT</span><span class="when">30. Okt. · 11:42</span></div><div class="lv"><div><small>Entry</small><span class="num">11,19</span></div><div><small>Ziel</small><span class="num ok">+8,2 %</span></div><div><small>Stop</small><span class="num bad">−2,3 %</span></div></div><div class="trade-f"><span>R/R 3,54</span><span class="go">Zum Post ↗</span></div></a>
+<a class="trade" href="https://x.com/realCryptoMatze/status/2115865954013819316" target="_blank" rel="noopener"><div class="trade-h"><b>TAO</b><span class="dir long">LONG</span><span class="when">29. Okt. · 18:58</span></div><div class="lv"><div><small>Entry</small><span class="num">250,6</span></div><div><small>Ziel</small><span class="num ok">+3,4 %</span></div><div><small>Stop</small><span class="num bad">−1,5 %</span></div></div><div class="trade-f"><span>R/R 2,33</span><span class="go">Zum Post ↗</span></div></a>
+    </div>
+  </section>
+
+  <section id="methode">
+    <div class="sh">
+      <div><div class="no">03 · Methode</div><h2>Struktur statt Signale.</h2>
+      <p>Kein Indikator-Bingo und keine Kursziele aus dem Bauch. Ein Setup entsteht nur, wenn die Regeln erfüllt sind. Sonst gibt es an dem Tag eben keins.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><b>Levels, an denen der Kurs reagiert hat</b><p>Swing-Hochs und -Tiefs der letzten 72 Stunden auf 1h-Kerzen. Echte Reaktionspunkte, keine gezeichneten Linien.</p></div>
+      <div class="step"><div class="n">02</div><b>Stop nach Volatilität</b><p>Der Stop liegt 1,2 × ATR hinter dem Entry, zwischen 0,8 und 5 %. Ein fester Abstand wäre bei jedem Coin anders falsch.</p></div>
+      <div class="step"><div class="n">03</div><b>Nur ab Chance-Risiko 1,5</b><p>Kein Trade gegen eine starke Tagesbewegung, kein Long bei überhitztem Funding. Lieber kein Setup als ein erzwungenes.</p></div>
+      <div class="step"><div class="n">04</div><b>Jede Auflösung öffentlich</b><p>Ziel und Stop in derselben Kerze zählen als Stop. Nach 72 Stunden ohne Treffer ist das Setup abgelaufen. Nichts wird gelöscht.</p></div>
+    </div>
+    <div class="never"><span class="l">Gibt es hier nicht</span><span class="c">Kursprognosen</span><span class="c">Altcoin-Shilling</span><span class="c">Moon- oder Doom-Talk</span><span class="c">Bezahlte Platzierungen</span></div>
+  </section>
+
+  <section id="tools">
+    <div class="sh">
+      <div><div class="no">04 · Tools</div><h2>Was ich selbst nutze.</h2>
+      <p>Kurz und kuratiert. Hier steht nur, was ich wirklich verwende. Links mit Ref-Code sind als Werbung gekennzeichnet.</p></div>
+    </div>
+    <div class="tools">
+      <article class="tool feat" id="degenlens">
+        <div class="k">Eigene Chrome-Extension <em>· kostenlos</em></div>
+        <h3>DegenLens</h3>
+        <p>Rug- und Risiko-Check für Solana-Memecoins, direkt auf DexScreener, pump.fun und Photon. Ein Score von 0 bis 100, der jeden Punkt erklärt.</p>
+        <ul>
+          <li>Insider-Netzwerke, Dev-Wallet und Top-Holder</li>
+          <li>Echte Kosten pro Trade inklusive Breakeven</li>
+          <li>Rote Flags deckeln den Score, kein „Low Risk“ neben Fake-Volumen</li>
+          <li>Keine Wallet-Verbindung, kein Tracking</li>
+        </ul>
+        <div class="act"><a class="btn gold" href="https://chromewebstore.google.com/detail/degenlens-%E2%80%93-memecoin-rug/mdmmddoajikdakiadcmocolniofceplk" target="_blank" rel="noopener">Im Chrome Web Store →</a></div>
+      </article>
+      <div class="side">
+        <article class="tool">
+          <div class="k">Solana · On-Chain</div>
+          <h3>Photon</h3>
+          <p>Schnelle Ausführung für Solana-Trades. Wer Memecoins anfasst, braucht Speed, sonst kauft man das Top der anderen.</p>
+          <div class="act"><a class="btn ghost" href="https://photon-sol.tinyastro.io/@CryptoMatze" target="_blank" rel="noopener sponsored">Zu Photon →</a><span class="ad">Werbung · Ref-Link</span></div>
+        </article>
+        <article class="tool">
+          <div class="k">Exchange · EU</div>
+          <h3>Bybit EU</h3>
+          <p>Spot und Derivate, MiCA-reguliert für die EU. Langweilige Infrastruktur, die einfach funktioniert.</p>
+          <div class="act"><a class="btn ghost" href="https://www.bybit.eu" target="_blank" rel="noopener">Zu Bybit EU →</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="x">
+    <div class="xbox">
+      <div class="l">
+        <div class="eb">05 · Auf X</div>
+        <h2>Die Setups kommen<br><span class="g">zuerst auf X.</span></h2>
+        <p>Charts, Auflösungen und Marktlage jeden Tag, auf Deutsch. Ohne Hype, mit Zahlen.</p>
+        <div class="cta"><a class="btn gold" href="https://x.com/realCryptoMatze" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@realCryptoMatze folgen</a></div>
+      </div>
+      <div class="formats">
+        <div class="fmt"><small>Täglich</small><b>Trade-Setups</b><p>Chart mit Entry, Ziel und Stop. Die Auflösung kommt als Zitat darunter.</p></div>
+        <div class="fmt"><small>Täglich</small><b>Marktlage</b><p>Bitcoin, Funding, Open Interest und ETF-Flows, wenn sie gerade etwas aussagen.</p></div>
+        <div class="fmt"><small>Video</small><b>Replays und Scans</b><p>Wie ein Setup gelaufen ist, und welche Memecoins DegenLens gerade rot markiert.</p></div>
+        <div class="fmt"><small>Wöchentlich</small><b>Bilanz</b><p>Alle Treffer und Fehlschläge der Woche in einem Video.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="in">
+  <div>
+    <a class="brand" href="#top"><img src="img/logo.png" alt=""><b style="color:var(--t);font-family:Syne">CryptoMatze</b></a>
+    <p>Keine Anlageberatung. Alle Inhalte dienen der Information. Vergangene Ergebnisse sagen nichts über künftige. Mit „Werbung · Ref-Link“ markierte Links sind Partner-Links: Meldest du dich darüber an, bekomme ich einen Anteil der Gebühren, ohne Mehrkosten für dich.</p>
+  </div>
+  <div><h4>Seiten</h4><a href="track-record.html">Track Record</a><a href="#trades">Laufende Trades</a><a href="#methode">Methode</a><a href="#degenlens">DegenLens</a><a href="#tools">Tools</a></div>
+  <div><h4>Folgen</h4><a href="https://x.com/realCryptoMatze" target="_blank" rel="noopener">X · @realCryptoMatze</a><a href="https://chromewebstore.google.com/detail/degenlens-%E2%80%93-memecoin-rug/mdmmddoajikdakiadcmocolniofceplk" target="_blank" rel="noopener">DegenLens</a><p>Stand 30. Okt. · 21:16</p></div>
+</div></footer>
+</body>
+</html>
